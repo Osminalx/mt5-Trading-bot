@@ -1,13 +1,16 @@
 from pydantic import BaseModel
 
-
-class MinSizingProps(BaseModel):
+class BaseSizerProps(BaseModel):
     pass
 
 
-class FixedSizingProps(BaseModel):
+class MinSizingProps(BaseSizerProps):
+    pass
+
+
+class FixedSizingProps(BaseSizerProps):
     volume:float
 
 
-class RiskPctSizingProps(BaseModel):
+class RiskPctSizingProps(BaseSizerProps):
     risk_pct:float

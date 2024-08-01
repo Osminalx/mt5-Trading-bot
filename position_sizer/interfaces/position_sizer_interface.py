@@ -5,5 +5,5 @@ from events.events import SignalEvent
 
 class IPositionSizer(Protocol):
 
-    def size_signal(self,signal_event:SignalEvent,data_provider:DataProvider) -> float:
+    def size_signal(self,signal_event:SignalEvent,data_provider:DataProvider) -> float | None:
         ...

@@ -125,7 +125,7 @@ class DataProvider():
             print(f"Algo no ha ido bien al recuperar el último tick de {symbol}.  MT5 Error: {mt5.last_error()} exception: {e}")
 
         else:
-            return tick._as_dict()
+            return tick._asdict()
     
     def check_for_new_data(self)->None:
         # 1) check if there is new data

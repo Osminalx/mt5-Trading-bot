@@ -9,6 +9,7 @@ class EventType(str,Enum):
     DATA = "DATA"
     SIGNAL = "SIGNAL"
     SIZING = "SIZING"
+    ORDER = "ORDER"
 
 class SignalType(str,Enum):
     BUY = "BUY"
@@ -48,6 +49,17 @@ class SignalEvent(BaseEvent):
 
 class SizingEvent(BaseEvent):
     event_type: EventType = EventType.SIZING
+    symbol:str
+    signal:SignalType
+    target_order: OrderType
+    target_price:float
+    magic_number:int
+    sl:float
+    tp: float
+    volume: float 
+
+class OrderEvent(BaseEvent):
+    event_type:EventType = EventType.ORDER
     symbol:str
     signal:SignalType
     target_order: OrderType

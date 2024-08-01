@@ -1,5 +1,6 @@
 from events.events import DataEvent, SignalEvent
 from data_provider.data_provider import DataProvider
+from portfolio.portfolio import Portfolio
 from ..interfaces.signal_generator_interface import ISignalGenerator
 
 import pandas as pd
@@ -9,11 +10,12 @@ from queue import Queue
 
 class SignalMACrossover(ISignalGenerator):
 
-    def __init__(self,events_queue:Queue,data_provider:DataProvider,fast_period:int,slow_period:int,timeframe:str) -> None:
+    def __init__(self,events_queue:Queue,data_provider:DataProvider,portfolio:Portfolio,fast_period:int,slow_period:int,timeframe:str) -> None:
 
         self.events_queue = events_queue
 
         self.DATA_PROVIDER = data_provider
+        self.PORTFOLIO =  portfolio
 
         self.timeframe = timeframe
         self.fast_period = fast_period if fast_period > 1 else 2
@@ -47,16 +49,19 @@ class SignalMACrossover(ISignalGenerator):
         #Get the needed data to calculate the mobile averages
         bars = self.DATA_PROVIDER.get_latests_closed_bars(symbol= symbol,timeframe= self.timeframe,num_bars= self.slow_period)
 
+        # Get the positions opened in the strategy in the symbol we have the data provider
+        open_positions =self.PORTFOLIO.get_number_of_strategy_open_positions_by_symbol(symbol)
+
         #Calculate the value of the indicators
         fast_ma = bars['close'][-self.fast_period:].mean()
         slow_ma = bars['close'].mean()
 
         #Detect a buy signal
-        if fast_ma > slow_ma:
+        if open_positions['LONG'] == 0 and fast_ma > slow_ma:
             signal = "BUY"
 
         #Sell signal
-        elif slow_ma > fast_ma:
+        elif open_positions['SHORT'] == 0 and  slow_ma > fast_ma:
             signal = "SELL"
 
         else:
@@ -68,7 +73,7 @@ class SignalMACrossover(ISignalGenerator):
                                                 signal= signal,
                                                 target_order= "MARKET",
                                                 target_price= 0.0,
-                                                magic_number= 1234,
+                                                magic_number= self.PORTFOLIO.magic,
                                                 sl= 0.0,
                                                 tp= 0.0
                                                 )

@@ -1,6 +1,6 @@
 from data_provider.data_provider import DataProvider
 from events.events import SignalEvent
-from position_sizer.Properties.position_sizer_properties import FixedSizingProps
+from position_sizer.properties.position_sizer_properties import FixedSizingProps
 from ..interfaces.position_sizer_interface import IPositionSizer
 
 class FixedSizePositionSIzer(IPositionSizer):
