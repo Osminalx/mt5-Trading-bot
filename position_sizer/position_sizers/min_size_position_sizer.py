@@ -1,5 +1,6 @@
 from data_provider.data_provider import DataProvider
 from events.events import SignalEvent
+from utils.utils import Utils
 from ..interfaces.position_sizer_interface import IPositionSizer
 import MetaTrader5 as mt5
 
@@ -13,5 +14,5 @@ class MinSizePositionSizer(IPositionSizer):
         if volume is not None:
             return volume
         else:
-            print(f"ERROR (MinSizePositionSizer): no se ha podido determinar el volumen mínimo para {signal_event.symbol}")
+            print(f"{Utils.dateprint()} - ERROR (MinSizePositionSizer): no se ha podido determinar el volumen mínimo para {signal_event.symbol}")
             return 0.0

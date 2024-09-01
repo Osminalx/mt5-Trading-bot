@@ -1,5 +1,6 @@
 from data_provider.data_provider import DataProvider
 from events.events import SignalEvent,SizingEvent
+from utils.utils import Utils
 from .interfaces.position_sizer_interface import IPositionSizer
 from .properties.position_sizer_properties  import BaseSizerProps, MinSizingProps, FixedSizingProps, RiskPctSizingProps
 from .position_sizers.min_size_position_sizer import MinSizePositionSizer
@@ -67,7 +68,7 @@ class PositionSizer(IPositionSizer):
 
         #security control
         if volume < mt5.symbol_info(signal_event.symbol).volume_min:
-            print(f"ERROR: El volumen {volume} es menor al volumen mínimo admitido por el símbolo {signal_event.symbol}")
+            print(f"{Utils.dateprint()} - ERROR: El volumen {volume} es menor al volumen mínimo admitido por el símbolo {signal_event.symbol}")
             return
 
         # Create and put the sizing event into the events queue

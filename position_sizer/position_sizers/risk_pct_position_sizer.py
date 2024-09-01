@@ -14,11 +14,11 @@ class RiskPctPositionSizer(IPositionSizer):
 
         #Check if the risk is positive
         if self.risk_pct <= 0:
-            print(f"ERROR (RiskPctPositionSizer): El porcentage de riesgo introducido {self.risk_pct} no es válido.")
+            print(f"{Utils.dateprint()} - ERROR (RiskPctPositionSizer): El porcentage de riesgo introducido {self.risk_pct} no es válido.")
             return 0.0
         #Check that the sl != 0
         if signal_event.sl  <= 0.0:
-            print(f"ERROR (RiskPctPositionSizer): El valor del SL: {signal_event.sl} no es válido.")
+            print(f"{Utils.dateprint()} - ERROR (RiskPctPositionSizer): El valor del SL: {signal_event.sl} no es válido.")
             return 0.0
         
         #Access to the account info (To get the account currency)
@@ -61,7 +61,7 @@ class RiskPctPositionSizer(IPositionSizer):
             volume = monetary_risk / (price_distance_in_integer_ticksizes *  tick_value_account_ccy)
             volume = round(volume / volume_step) * volume_step
         except Exception as e:
-            print(f"ERROR: Problema al calcular el tamaño de la posición en función del riesgo. Excepción: {e} ")
+            print(f"{Utils.dateprint()} - ERROR: Problema al calcular el tamaño de la posición en función del riesgo. Excepción: {e} ")
             return 0.0
 
         return volume

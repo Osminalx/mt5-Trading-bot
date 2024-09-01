@@ -34,7 +34,7 @@ class RiskManager(IRiskManager):
         # Calculate the value of the open positions
         total_value = 0.00
         for position in current_positions:
-            total_value += self._compute_value_of_position_in_acc_ccy()
+            total_value += self._compute_value_of_position_in_acc_ccy(position.symbol,position.volume,position.type)
 
         return total_value
 

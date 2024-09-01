@@ -1,4 +1,5 @@
-
+from datetime import datetime,timezone
+from zoneinfo import ZoneInfo
 import MetaTrader5 as mt5
 
 
@@ -42,3 +43,8 @@ class Utils():
             # Transform the source currency to the destinationi currency
             converted_amount = amount / last_price if fx_symbol_base == to_ccy else amount * last_price  
             return converted_amount
+
+    @staticmethod
+    def dateprint() -> str:
+        # Asia/Nicosia time zone lets the framework operate for all of the days of the week, since almost all brokers use this timezone
+        return datetime.now(ZoneInfo("Asia/Nicosia")).strftime("%d/%m/%Y  %H:%M:%S.%f")[:-3]

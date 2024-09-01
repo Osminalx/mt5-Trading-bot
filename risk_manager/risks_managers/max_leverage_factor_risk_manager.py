@@ -4,6 +4,8 @@ from risk_manager.properties.risk_manager_properties import MaxLeverageFactorRis
 import MetaTrader5 as mt5
 import sys
 
+from utils.utils import Utils
+
 
 class MaxLeverageFactorRiskManager(IRiskManager):
 
@@ -32,7 +34,7 @@ class MaxLeverageFactorRiskManager(IRiskManager):
         if abs(new_leverage_factor) <= self.max_leverage_factor:
             return True
         else:
-            print(f"RISK MGMT: La posición objetivo {sizing_event.signal} {sizing_event.volume} implica un Leverage Factor de {abs(new_leverage_factor):.2f}, que supera el max. de {self.max_leverage_factor}")
+            print(f"{Utils.dateprint()} - RISK MGMT: La posición objetivo {sizing_event.signal} {sizing_event.volume} implica un Leverage Factor de {abs(new_leverage_factor):.2f}, que supera el max. de {self.max_leverage_factor}")
             return False
 
 

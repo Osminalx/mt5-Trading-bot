@@ -2,6 +2,8 @@ import MetaTrader5 as mt5
 import os
 from dotenv import load_dotenv, find_dotenv
 
+from utils.utils import Utils
+
 
 class PlatformConnector():
     def __init__(self,symbol_list:list) -> None:
@@ -72,26 +74,26 @@ class PlatformConnector():
         #2) if it isn't, we will add it
         for symbol in symbols:
             if mt5.symbol_info(symbol) is None:
-                print(f"No se ha podido agregar el símbolo {symbol} al MarketWatch: {mt5.last_error()}")
+                print(f"{Utils.dateprint()} - No se ha podido agregar el símbolo {symbol} al MarketWatch: {mt5.last_error()}")
                 continue
 
             if not mt5.symbol_info(symbol).visible:
                 if not mt5.symbol_select(symbol, True):
-                    print(f"No se ha podido agregar el símbolo {symbol} al MarketWatch: {mt5.last_error()}")
+                    print(f"{Utils.dateprint()} - No se ha podido agregar el símbolo {symbol} al MarketWatch: {mt5.last_error()}")
                 else:
-                    print(f"El símbolo {symbol} se agregó con éxito!")
+                    print(f"{Utils.dateprint()} - El símbolo {symbol} se agregó con éxito!")
             else:
-                print(f"El símbolo {symbol} ya estaba en el MarketWatch")
+                print(f"{Utils.dateprint()} - El símbolo {symbol} ya estaba en el MarketWatch")
     def _print_account_info(self)->None:
         #Get an object of type "AccountInfo"
         account_info = mt5.account_info()._asdict()
 
-        print(f"+-------- Información de la cuenta --------")
-        print(f"| - ID de cuenta: {account_info['login']}")
-        print(f"| - Nombre del Trader: {account_info['name']}")
-        print(f"| - Broker: {account_info['company']}")
-        print(f"| - Servidor: {account_info['server']}")
-        print(f"| - Apalancamiento: {account_info['leverage']}")
-        print(f"| - Divisa de la cuenta: {account_info['currency']}")
-        print(f"| - Balance de la cuenta: {account_info['balance']}")
-        print(f"+------------------------------------------")
+        print(f"{Utils.dateprint()} - +-------- Información de la cuenta --------")
+        print(f"{Utils.dateprint()} - | - ID de cuenta: {account_info['login']}")
+        print(f"{Utils.dateprint()} - | - Nombre del Trader: {account_info['name']}")
+        print(f"{Utils.dateprint()} - | - Broker: {account_info['company']}")
+        print(f"{Utils.dateprint()} - | - Servidor: {account_info['server']}")
+        print(f"{Utils.dateprint()} - | - Apalancamiento: {account_info['leverage']}")
+        print(f"{Utils.dateprint()} - | - Divisa de la cuenta: {account_info['currency']}")
+        print(f"{Utils.dateprint()} - | - Balance de la cuenta: {account_info['balance']}")
+        print(f"{Utils.dateprint()} - +------------------------------------------")
