@@ -20,7 +20,7 @@ if __name__ == "__main__":
 
     # Defition of necessary variables for the strategy
     symbols = ["EURUSD","USDJPY"]
-    timeframe = '1min'
+    timeframe = '5min'
     magic_number = 12345
     slow_ma_period = 10
     fast_ma_period = 5
